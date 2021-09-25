@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+</head>
+<body>
+        <form id='chat_form'>
+            <input type="text" name='name' id='name'>
+            <input type="text" name="message" id='message'>
+            <input type="submit">
+        </form>
+
+        <div class="chat" id='chat'></div>
+</body>
+    <script>
+
+        let chatElement = document.querySelector('#chat');
+        let ws = new WebSocket("ws://127.0.0.1:8000");
+        let formElement = document.querySelector('#chat_form');
+
+
+        ws.onmessage = (message) => {
+
+            let messages = JSON.parse(message.data);
+            //console.log(typeof(messages));
+            console.log(messages);
+
+            messages.forEach((message_arr) => {
+
+                let divElement = document.createElement('div');
+
+                divElement.textContent = `${message_arr.name}: ${message_arr.message}`;
+
+                chatElement.append(divElement);
+
+            } )
+
+        }
+
+        formElement.addEventListener('submit', (event) => {
+
+            event.preventDefault();
+
+            let nameInput = document.querySelector('#name').value;
+            let messageInput = document.querySelector('#message').value;
+
+            ws.send(JSON.stringify({
+                nameInput, messageInput
+            }));
+
+            return false;
+        })
+
+    </script>
+</html>

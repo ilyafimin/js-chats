@@ -1,0 +1,17 @@
+{
+  "name": "websocket-js-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js --port 5000"
+  },
+  "type": "module",
+  "author": "Ilya",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.12",
+    "uuid": "^8.3.2",
+    "ws": "^8.2.1"
+  }
+}
